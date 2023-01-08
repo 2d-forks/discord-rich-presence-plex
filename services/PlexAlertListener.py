@@ -3,7 +3,6 @@
 from .DiscordRpcService import DiscordRpcService
 from .cache import getKey, setKey
 from .config import config
-from .imgur import uploadImage
 from plexapi.alert import AlertListener
 from plexapi.base import Playable, PlexPartialObject
 from plexapi.media import Genre, GuidTag
@@ -208,13 +207,11 @@ class PlexAlertListener(threading.Thread):
 				else:
 					self.logger.debug("Unsupported media type \"%s\", ignoring", mediaType)
 					return
-				thumbUrl = ""
-				if thumb and config["display"]["posters"]["enabled"]:
-					thumbUrl = getKey(thumb)
-					if not thumbUrl:
-						self.logger.debug("Uploading image")
-						thumbUrl = uploadImage(self.server.url(thumb, True))
-						setKey(thumb, thumbUrl)
+				thumbUrl = getKey(thumb)
+				if not thumbUrl:
+					self.logger.debug("Uploading image")
+					thumbUrl = self.server.url(thumb, True)
+					setKey(thumb, thumbUrl)
 				activity: models.discord.Activity = {
 					"details": title[:128],
 					"state": stateText[:128],

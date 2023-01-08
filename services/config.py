@@ -14,10 +14,6 @@ config: models.config.Config = {
 	"display": {
 		"hideTotalTime": False,
 		"useRemainingTime": False,
-		"posters": {
-			"enabled": False,
-			"imgurClientID": "",
-		},
 		"buttons": [],
 	},
 	"users": [],
